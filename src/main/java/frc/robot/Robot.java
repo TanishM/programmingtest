@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -81,7 +82,11 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() { //checking for gyroheading and scheduling raise or lower command if its 90
+      if (m_robotContainer.getHeading() == 90) {
+          CommandScheduler.getInstance().schedule(new InstantCommand(() -> m_robotContainer.getElevator().raiseOrLower()));
+      }
+  }
 
   @Override
   public void testInit() {
